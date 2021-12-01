@@ -1,0 +1,72 @@
+{
+  "root": "apps/medily-client",
+  "sourceRoot": "apps/medily-client/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/medily-client",
+        "index": "apps/medily-client/src/index.html",
+        "baseHref": "/",
+        "main": "apps/medily-client/src/main.js",
+        "polyfills": "apps/medily-client/src/polyfills.js",
+        "tsConfig": "apps/medily-client/tsconfig.app.json",
+        "assets": [
+          "apps/medily-client/src/favicon.ico",
+          "apps/medily-client/src/assets"
+        ],
+        "styles": ["apps/medily-client/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/medily-client/src/environments/environment.js",
+              "with": "apps/medily-client/src/environments/environment.prod.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "medily-client:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "medily-client:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/medily-client/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/medily-client"],
+      "options": {
+        "jestConfig": "apps/medily-client/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
