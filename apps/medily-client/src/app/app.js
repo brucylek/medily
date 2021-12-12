@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import styles from './app.module.css';
 import { ReactComponent as Logo } from './logo.svg';
 import star from './star.svg';
@@ -134,4 +135,53 @@ nx affected:e2e
     </div>
   );
 }
+=======
+import React, { useState, useEffect } from "react";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import firebase from "./utils/firebaseConfig";
+import Main from "./components/Main";
+
+const App = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+    callbacks: {
+      signInSuccess: () => false,
+    },
+  };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      // !! ensure boolean
+      setIsSignedIn(!!user);
+      console.log(user);
+    });
+  }, []);
+
+  return (
+    <div className="App" style={{textAlign: 'center' , color: 'white' , background:'#FF6733'}}>
+      {isSignedIn ? (
+        <Main />
+      ) : (
+        <div className="login-page">
+          <h1>Bienvenue dans la famille !”</h1>
+          <p>hello</p>
+          <p></p>
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+>>>>>>> 08e0a6f (second commit)
 export default App;
