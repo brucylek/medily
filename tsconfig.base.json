@@ -15,7 +15,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@medily-workspace/medily-resources": [
+        "libs/medily-resources/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

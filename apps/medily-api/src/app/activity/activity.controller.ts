@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Delete, Patch } from '@nestjs/common';
 import { ActivityService } from './activity.service';
+import { Activity } from './activity.interface';
 
 @Controller('activity')
 export class ActivityController {
@@ -15,4 +16,20 @@ export class ActivityController {
     findbyid(@Param('id') id: string) {
         return this.activityService.findbyId(id);   
     }
+
+    @Post()
+    create(@Body() newActivity: Activity)  {
+        return this.activityService.createActivity(newActivity);   
+    }
+
+    @Patch('/:id')
+    update(@Param('id') id: string, @Body() updateActivity: Activity) {
+      return this.activityService.update(updateActivity, id);
+    }
+
+    @Delete('/:id')
+    delete(@Param('id') id: string) {
+    return this.activityService.DeletebyId(id);
+    }
+
 }

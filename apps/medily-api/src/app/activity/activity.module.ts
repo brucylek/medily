@@ -5,5 +5,6 @@ import { ActivityService } from './activity.service';
 @Module({
   controllers: [ActivityController],
   providers: [ActivityService],
+
 })
 export class ActivityModule {}

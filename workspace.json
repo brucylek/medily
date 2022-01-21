@@ -3,6 +3,7 @@
   "projects": {
     "medily-api": "apps/medily-api",
     "medily-client": "apps/medily-client",
-    "medily-client-e2e": "apps/medily-client-e2e"
+    "medily-client-e2e": "apps/medily-client-e2e",
+    "medily-resources": "libs/medily-resources"
   }
 }

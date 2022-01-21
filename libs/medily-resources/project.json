@@ -1,0 +1,23 @@
+{
+  "root": "libs/medily-resources",
+  "sourceRoot": "libs/medily-resources/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/medily-resources/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/medily-resources"],
+      "options": {
+        "jestConfig": "libs/medily-resources/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
