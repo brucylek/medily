@@ -43,6 +43,7 @@
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "medily-client:build",
+        "proxyConfig": "apps/medily-client/proxy.conf.json",
         "hmr": true
       },
       "configurations": {
