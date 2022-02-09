@@ -18,6 +18,12 @@ export class ActivityService {
          return activitiesList;
     }
 
+    async findDesc() {
+        const Snapshot = await db.collection('Activity').where('description', '==', 'découvrez les bien faits de jouer au piano').get();
+         const activitiesList = Snapshot.docs.map(doc => doc.data());
+         return activitiesList;
+    }
+
     async findbyId(id : string) {
         const activity = await db.collection('Activity').doc(id).get();
         // const db = getFirestore(appFirebase);
@@ -34,23 +40,37 @@ export class ActivityService {
 
     async update(item : Activity, id : string){
         item._id=id;
+        if(item.address.length>0 && item.description.length>0 && item.price>0 
+            && item.id_category.length>0 && item.name.length>0 && item.id_pro.length>0)
+        {
         const activity = await db.collection('Activity').doc(id).set(item);
-        return item;  
+        return item; 
+        } 
+        else{
+            return ("Fields should not be empty");
+        }
     }
 
-    async createActivity(item : Activity) {        
-        const activityRef = db.collection('Activity').doc();
-        item._id=activityRef.id;
-        const res = await activityRef.set(item)
-        .then(() => {
-            console.log(`Activity ${item.name} successfully created`);
-            return item;
-        })
-        .catch( (error) => {
-            console.error(" Error creating activity", item.name, error);
-            return Promise.reject(Error(`Error creating activity ${item.name}`));
-        });; 
-                
+    async createActivity(item : Activity) {  
+        if(item.address.length>0 && item.description.length>0
+            && item.price>0 && item.id_category.length>0 && item.name.length>0 && item.id_pro.length>0)
+        {
+            const activityRef = db.collection('Activity').doc();
+            item._id=activityRef.id;
+            const res = await activityRef.set(item)
+            .then(() => {
+                console.log(`Activity ${item.name} successfully created`);
+                return item;
+            })
+            .catch( (error) => {
+                console.error(" Error creating activity", item.name, error);
+                return Promise.reject(Error(`Error creating activity ${item.name}`));
+            }); 
+        }
+        else {
+            return("empty fields");
+        }      
+                    
     }
 
     async DeletebyId(id : string) {        

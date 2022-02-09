@@ -45,7 +45,7 @@ const App = () => {
 
   return (
     <form>
-      <h1>Todos</h1>
+      <h1>Activity</h1>
       
           <h3>Nom :</h3>
             <input type="text" name="name" value={activity.name || ""} onChange={e => setActivity({ ...activity, name: e.target.value })} />

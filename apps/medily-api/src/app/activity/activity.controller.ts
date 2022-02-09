@@ -12,6 +12,11 @@ export class ActivityController {
         return this.activityService.findAll();   
     }
 
+    @Get('/desc')
+    findDesc() {
+        return this.activityService.findDesc();   
+    }
+
     @Get('/:id')
     findbyid(@Param('id') id: string) {
         return this.activityService.findbyId(id);   
