@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { map } from 'rxjs';
 import { db } from "../database/firebaseconfig";
-import {User} from "../user/user.interface";
+import {User, UserLoginDto} from "../user/user.interface";
 
 @Injectable()
 export class UserService {
@@ -35,10 +35,23 @@ export class UserService {
             return new NotFoundException().getResponse();
             //return Promise.reject(Error("Error getting user "));
         }
-     
     }
 
-    async createUser(item : User) {    
+    async createUser(item : User) {
+        const userRef = db.collection('User').doc();
+        item._id=userRef.id;
+        item.rule='user';
+        const res = await userRef.set(item)
+        .then(() => {
+            console.log(`User ${item.pseudo} successfully created $`);
+            return item;
+        })
+        .catch( (error) => {
+            console.error(" Error creating user", item.pseudo, error);
+            return Promise.reject(Error(`Error creating user ${item.pseudo}`));
+        });
+    }
+    /*async createUser(item : User) {    
      if(item.age>18){
      
         if(item.email.length>0 && item.password.length>8 &&item.pseudo.length>0)
@@ -59,9 +72,9 @@ export class UserService {
      else{
          return('empty fields or not allowed value');
      }
-    } 
+    }}*/ 
 
-    }
+    
 
     async DeletebyId(id : string) {        
         const res = await db.collection('User').doc(id).delete()
@@ -76,7 +89,7 @@ export class UserService {
         });          
     }
 
-    async login(login : User) {
+    async login(login : UserLoginDto) {
         const Snapshot = await db.collection('User').where('email', '==', login.email).where('password', '==',login.password).get();
         if(!Snapshot.empty){
             const user = Snapshot.docs.map(doc => doc.data());
