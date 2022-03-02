@@ -5,6 +5,6 @@ export interface User {
     password : String;
     tel : String;
     ville : String;
-    age : string,
+    age : Number,
     rule : string,
 }

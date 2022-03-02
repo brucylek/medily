@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { map } from 'rxjs';
 import { db } from "../database/firebaseconfig";
 import {User} from "../user/user.interface";
 
@@ -12,14 +13,15 @@ export class UserService {
     }
 
     async findbyId(id : string) {
-        const user = await db.collection('User').doc(id).get();
+        const user = await db.collection('User').doc(id).get()
         if (user.exists) {
-            console.log(user.data());
+            //console.log(user.data());
              return user.data();
         }
         else{
-            console.log(`User ${id} not found`)
-        return Promise.reject(Error(`User ${id} not found`))
+            //console.log(`User ${id} not found`)
+           //return Promise.reject(Error(`User ${id} not found`))
+           return new NotFoundException().getResponse();
         }
     }
 
@@ -30,13 +32,16 @@ export class UserService {
             return user;
         }
         else{
-            return Promise.reject(Error("Error getting user "));
+            return new NotFoundException().getResponse();
+            //return Promise.reject(Error("Error getting user "));
         }
      
     }
 
     async createUser(item : User) {    
-     if(item.email.length>0 && item.password.length>8 &&item.pseudo.length>0)
+     if(item.age>18){
+     
+        if(item.email.length>0 && item.password.length>8 &&item.pseudo.length>0)
       {    
         const userRef = db.collection('User').doc();
         item._id=userRef.id;
@@ -53,7 +58,9 @@ export class UserService {
      }
      else{
          return('empty fields or not allowed value');
-     }           
+     }
+    } 
+
     }
 
     async DeletebyId(id : string) {        
@@ -63,8 +70,9 @@ export class UserService {
             return(`User ${id} successfully deleted`);
         })
         .catch( (error) => {
-            console.error(" Error removing user", id, error);
-            return Promise.reject(Error(`Error deleting user ${id}`));
+            /*console.error(" Error removing user", id, error);
+            return Promise.reject(Error(`Error deleting user ${id}`));*/
+            return new NotFoundException().getResponse();
         });          
     }
 
@@ -75,7 +83,8 @@ export class UserService {
             return user;
         }
         else{
-            return Promise.reject(Error("User not found "));
+            //return Promise.reject(Error("User not found "));
+            return new NotFoundException().getResponse();
         }
     }
 
