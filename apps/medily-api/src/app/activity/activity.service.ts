@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 //import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { db } from "../database/firebaseconfig";
-import { Activity} from "../activity/activity.interface";
+import { Activity, ActivityCreateDto} from "../activity/activity.interface";
 
-
+const idProAdmin = '';
 @Injectable()
 export class ActivityService {
 
@@ -18,8 +18,8 @@ export class ActivityService {
          return activitiesList;
     }
 
-    async findDesc() {
-        const Snapshot = await db.collection('Activity').where('description', '==', 'découvrez les bien faits de jouer au piano').get();
+    async findCategory(category: string) {
+        const Snapshot = await db.collection('Activity').where('id_category', '==', category).get();
          const activitiesList = Snapshot.docs.map(doc => doc.data());
          return activitiesList;
     }
@@ -52,7 +52,7 @@ export class ActivityService {
     }
 
     async createActivity(item : Activity) {  
-        if(item.address.length>0 && item.description.length>0
+        /*if(item.address.length>0 && item.description.length>0
             && item.price>0 && item.id_category.length>0 && item.name.length>0 && item.id_pro.length>0)
         {
             const activityRef = db.collection('Activity').doc();
@@ -69,7 +69,19 @@ export class ActivityService {
         }
         else {
             return("empty fields");
-        }      
+        }*/   
+        
+            const activityRef = db.collection('Activity').doc();
+            item._id=activityRef.id;
+            const res = await activityRef.set(item)
+            .then(() => {
+                console.log(`Activity ${item.name} successfully created`);
+                return item;
+            })
+            .catch( (error) => {
+                console.error(" Error creating activity", item.name, error);
+                return Promise.reject(Error(`Error creating activity ${item.name}`));
+            }); 
                     
     }
 

@@ -1,12 +1,14 @@
 export interface Activity {
-_id : string;
+_id : String;
 address : String;
-date_end : Date;
-date_start : Date;
+date_end : String;
+date_start : String;
 description : String;
 id_category : String;
-id_pro : string;
+id_pro : String;
 name : String;
-nb_seats : String;
+nb_seats : Number;
 price : Number;
 }
+
+export type ActivityCreateDto = Omit<Activity, '_id'>
