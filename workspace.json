@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "api-error": "libs/api/error",
     "medily-api": "apps/medily-api",
     "medily-client": "apps/medily-client",
     "medily-client-e2e": "apps/medily-client-e2e",

@@ -17,10 +17,9 @@ async function bootstrap() {
     .setTitle('Medily api')
     .setDescription('Medily API description')
     .setVersion('1.0')
-    .addTag('Medily')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup(globalPrefix, app, document);
 
   const port = process.env.PORT || 3333;
   await app.listen(port);

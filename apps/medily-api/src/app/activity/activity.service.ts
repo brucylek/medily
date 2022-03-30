@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 //import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { db } from "../database/firebaseconfig";
 import { Activity, ActivityCreateDto} from "../activity/activity.interface";
@@ -24,7 +24,7 @@ export class ActivityService {
          return activitiesList;
     }
 
-    async findbyId(id : string) {
+    async findbyId(id : string){
         const activity = await db.collection('Activity').doc(id).get();
         // const db = getFirestore(appFirebase);
         // const activity = await getDoc(doc(db,'Activity',id));
@@ -51,7 +51,7 @@ export class ActivityService {
         }
     }
 
-    async createActivity(item : Activity) {  
+    async createActivity(item : Activity){  
         /*if(item.address.length>0 && item.description.length>0
             && item.price>0 && item.id_category.length>0 && item.name.length>0 && item.id_pro.length>0)
         {

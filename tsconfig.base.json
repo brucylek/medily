@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@medily-workspace/api/error": ["libs/api/error/src/index.ts"],
       "@medily-workspace/medily-resources": [
         "libs/medily-resources/src/index.ts"
       ]
