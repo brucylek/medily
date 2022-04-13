@@ -40,8 +40,9 @@ export class ActivityService {
 
     async update(item : Activity, id : string){
         item._id=id;
+        item.id_pro = idProAdmin;
         if(item.address.length>0 && item.description.length>0 && item.price>0 
-            && item.id_category.length>0 && item.name.length>0 && item.id_pro.length>0)
+            && item.id_category.length>0 && item.name.length>0)
         {
         const activity = await db.collection('Activity').doc(id).set(item);
         return item; 

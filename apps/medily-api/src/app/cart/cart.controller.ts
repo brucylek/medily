@@ -10,14 +10,25 @@ import {
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
+import { Cart, Cart_Act, AddAct } from './cart.interface';
 
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
+  @Get('/new:id')
+  create(@Param('id') id: string) {
+    return this.cartService.create(id);
+  }
+
+  @Get('/current')
+  findCurrentCart() {
+    return this.cartService.findCurrentCart();
+  }
+
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  addActivity(@Body() newAct: AddAct) {
+    return this.cartService.addActivity(newAct);
   }
 
   @Get()
@@ -30,13 +41,13 @@ export class CartController {
     return this.cartService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(+id, updateCartDto);
+  @Patch()
+  update( @Body() newAct: AddAct) {
+    return this.cartService.updateActivity(newAct);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  @Delete()
+  remove(@Body() newAct: Cart_Act) {
+    return this.cartService.remove(newAct);
   }
 }
