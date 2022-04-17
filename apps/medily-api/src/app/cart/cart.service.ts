@@ -146,7 +146,7 @@ export class CartService {
 
     const Snapshot = await db.collection('Cart-Activity').where('id_cart', '==', newActivity.id_cart)
     .where('id_act', '==', newActivity.id_act).get();
-    const cartActs = Snapshot.docs.map(doc => doc.data());
+    const cartActs = Snapshot.docs.map(doc => doc.data()); 
     const cartsId = Snapshot.docs.map(doc => doc.id);
     const cartId = cartsId[0];
 
